@@ -2,11 +2,9 @@
 import json
 from pathlib import Path
 
-DATA_FILE = Path("data/tasks.json")
-
 
 class JsonStore:
-    def __init__(self, file_path=DATA_FILE):
+    def __init__(self, file_path=Path("data/tasks.json")):
         self.file_path = file_path
         self.file_path.parent.mkdir(exist_ok=True)
 
@@ -21,10 +19,8 @@ class JsonStore:
         with open(self.file_path, "w") as f:
             json.dump(data, f, indent=4)
 
-    def save_task(self, task):
-        data = self._read()
-        data.append(task.to_dict())
-        self._write(data)
-
-    def load_tasks(self):
+    def get_all(self):
         return self._read()
+
+    def save_all(self, tasks):
+        self._write(tasks)

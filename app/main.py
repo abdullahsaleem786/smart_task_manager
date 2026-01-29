@@ -1,32 +1,40 @@
 # app/main.py
 from app.services.task_service import TaskService
 from app.storage.json_store import JsonStore
+from app.cli.menu import show_menu
 
 
 def main():
     service = TaskService(JsonStore())
 
     while True:
-        print("\n1. Add Task")
-        print("2. List Tasks")
-        print("3. Exit")
-
+        show_menu()
         choice = input("Choose: ")
 
-        if choice == "1":
-            title = input("Title: ")
-            desc = input("Description: ")
-            task = service.create_task(title, desc)
-            print(f"Task created: {task.title}")
+        try:
+            if choice == "1":
+                title = input("Title: ")
+                desc = input("Description: ")
+                service.create_task(title, desc)
 
-        elif choice == "2":
-            tasks = service.list_tasks()
-            for t in tasks:
-                status = "✓" if t["is_completed"] else "✗"
-                print(f"[{status}] {t['title']}")
+            elif choice == "2":
+                for t in service.list_tasks():
+                    status = "✓" if t["is_completed"] else "✗"
+                    print(f"{t['id']} | [{status}] {t['title']}")
 
-        elif choice == "3":
-            break
+            elif choice == "3":
+                task_id = input("Task ID: ")
+                service.complete_task(task_id)
+
+            elif choice == "4":
+                task_id = input("Task ID: ")
+                service.delete_task(task_id)
+
+            elif choice == "5":
+                break
+
+        except ValueError as e:
+            print(e)
 
 
 if __name__ == "__main__":
