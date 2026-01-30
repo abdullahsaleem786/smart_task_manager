@@ -25,11 +25,11 @@ def main():
                     print(f"{t['id']} | [{status}] {t['title']}")
 
             elif choice == "3":
-                task_id = input("Task ID: ")
+                task_id = input("Task ID: ").split()
                 task_service.complete_task(task_id)
 
             elif choice == "4":
-                task_id = input("Task ID: ")
+                task_id = input("Task ID: ").split()
                 task_service.delete_task(task_id)
 
             elif choice == "5":
