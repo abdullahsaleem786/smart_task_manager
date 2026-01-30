@@ -7,5 +7,23 @@
         "created_at": "2026-01-28T18:36:37.502338",
         "completed_at": null,
         "is_completed": true
+    },
+    {
+        "id": "b356bec6-75af-46be-899c-17dc78573ec1",
+        "title": "Cricket",
+        "description": "Play cricket with my friends",
+        "priority": 3,
+        "created_at": "2026-01-30T14:38:18.156072",
+        "completed_at": null,
+        "is_completed": true
+    },
+    {
+        "id": "81404d29-8998-426f-931d-4b3c0f773f56",
+        "title": "Learn OOP",
+        "description": "For interview Preparation",
+        "priority": 3,
+        "created_at": "2026-01-30T14:41:21.924125",
+        "completed_at": null,
+        "is_completed": false
     }
 ]

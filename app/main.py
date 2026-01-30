@@ -2,10 +2,12 @@
 from app.services.task_service import TaskService
 from app.storage.json_store import JsonStore
 from app.cli.menu import show_menu
+from app.analytics.analytics_service import AnalyticsService
 
 
 def main():
-    service = TaskService(JsonStore())
+    task_service = TaskService(JsonStore())
+    analytics = AnalyticsService(task_service)
 
     while True:
         show_menu()
@@ -15,22 +17,27 @@ def main():
             if choice == "1":
                 title = input("Title: ")
                 desc = input("Description: ")
-                service.create_task(title, desc)
+                task_service.create_task(title, desc)
 
             elif choice == "2":
-                for t in service.list_tasks():
+                for t in task_service.list_tasks():
                     status = "✓" if t["is_completed"] else "✗"
                     print(f"{t['id']} | [{status}] {t['title']}")
 
             elif choice == "3":
                 task_id = input("Task ID: ")
-                service.complete_task(task_id)
+                task_service.complete_task(task_id)
 
             elif choice == "4":
                 task_id = input("Task ID: ")
-                service.delete_task(task_id)
+                task_service.delete_task(task_id)
 
             elif choice == "5":
+                summary = analytics.summary()
+                for k, v in summary.items():
+                    print(f"{k}: {v}")
+
+            elif choice == "6":
                 break
 
         except ValueError as e:
