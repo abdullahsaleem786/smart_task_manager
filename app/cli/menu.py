@@ -5,4 +5,6 @@ def show_menu():
     print("3. Complete Task")
     print("4. Delete Task")
     print("5. View Analytics")
-    print("6. Exit")
+    print("6. View Daily Trends")
+    print("7. Exit")
+

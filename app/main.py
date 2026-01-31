@@ -36,8 +36,19 @@ def main():
                 summary = analytics.summary()
                 for k, v in summary.items():
                     print(f"{k}: {v}")
-
+                    
             elif choice == "6":
+                trends = analytics.daily_summary()
+                print("\nTasks Created Per Day:")
+                for day, count in trends["created_per_day"].items():
+                    print(f"{day}: {count}")
+
+                print("\nTasks Completed Per Day:")
+                for day, count in trends["completed_per_day"].items():
+                    print(f"{day}: {count}")
+
+
+            elif choice == "7":
                 break
 
         except ValueError as e:
