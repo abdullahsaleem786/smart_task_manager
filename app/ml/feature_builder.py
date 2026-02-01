@@ -23,7 +23,7 @@ class FeatureBuilder:
 
             if not created or not completed:
                 continue
-
+            #Fix this
             duration = (completed - created).total_seconds() / 60
 
             features.append({
