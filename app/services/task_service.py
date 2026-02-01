@@ -1,32 +1,34 @@
-# app/services/task_service.py
+from datetime import datetime
 from app.models.task import Task
 
 
 class TaskService:
-    def __init__(self, store):
-        self.store = store
+    def __init__(self, storage):
+        self.storage = storage
+        self.tasks = self.storage.load_tasks()
 
     def create_task(self, title, description="", priority=3):
         task = Task(title, description, priority)
-        tasks = self.store.get_all()
-        tasks.append(task.to_dict())
-        self.store.save_all(tasks)
+        self.tasks.append(task.to_dict())
+        self.storage.save_tasks(self.tasks)
         return task
 
     def list_tasks(self):
-        return self.store.get_all()
+        return self.tasks
 
     def complete_task(self, task_id):
-        tasks = self.store.get_all()
-        for t in tasks:
-            if t["id"] == task_id:
-                t["is_completed"] = True
-                return self.store.save_all(tasks)
-        raise ValueError("Task not found")
+        for task in self.tasks:
+            if task["id"] == task_id:
+                task["completed"] = True
+                task["completed_at"] = datetime.now().isoformat()
+                self.storage.save_tasks(self.tasks)
+                return True
+        return False
 
     def delete_task(self, task_id):
-        tasks = self.store.get_all()
-        new_tasks = [t for t in tasks if t["id"] != task_id]
-        if len(tasks) == len(new_tasks):
-            raise ValueError("Task not found")
-        self.store.save_all(new_tasks)
+        for i, task in enumerate(self.tasks):
+            if task["id"] == task_id:
+                self.tasks.pop(i)
+                self.storage.save_tasks(self.tasks)
+                return True
+        return False

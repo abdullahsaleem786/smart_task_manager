@@ -1,38 +1,48 @@
 [
-    {
-        "id": "d5e5e569-88a4-4bcc-98c2-64b8e2e1703f",
-        "title": "Learn DSA",
-        "description": "Revision of Binary Search, Sliding Window, Arrays&Strings, Two-pointer",
-        "priority": 3,
-        "created_at": "2026-01-28T18:36:37.502338",
-        "completed_at": null,
-        "is_completed": true
-    },
-    {
-        "id": "b356bec6-75af-46be-899c-17dc78573ec1",
-        "title": "Cricket",
-        "description": "Play cricket with my friends",
-        "priority": 3,
-        "created_at": "2026-01-30T14:38:18.156072",
-        "completed_at": null,
-        "is_completed": true
-    },
-    {
-        "id": "81404d29-8998-426f-931d-4b3c0f773f56",
-        "title": "Learn OOP",
-        "description": "For interview Preparation",
-        "priority": 3,
-        "created_at": "2026-01-30T14:41:21.924125",
-        "completed_at": null,
-        "is_completed": false
-    },
-    {
-        "id": "18f9f518-a685-49bf-85b3-9038f4df1e8f",
-        "title": "Match",
-        "description": "Pak vs Aus 2nd T20",
-        "priority": 3,
-        "created_at": "2026-01-31T07:58:44.419166",
-        "completed_at": null,
-        "is_completed": false
-    }
+  {
+    "id": "d5e5e569-88a4-4bcc-98c2-64b8e2e1703f",
+    "title": "Learn DSA",
+    "description": "Revision of Binary Search, Sliding Window, Arrays&Strings, Two-pointer",
+    "priority": 3,
+    "created_at": "2026-01-28T18:36:37.502338",
+    "completed_at": null,
+    "is_completed": true
+  },
+  {
+    "id": "b356bec6-75af-46be-899c-17dc78573ec1",
+    "title": "Cricket",
+    "description": "Play cricket with my friends",
+    "priority": 3,
+    "created_at": "2026-01-30T14:38:18.156072",
+    "completed_at": null,
+    "is_completed": true
+  },
+  {
+    "id": "81404d29-8998-426f-931d-4b3c0f773f56",
+    "title": "Learn OOP",
+    "description": "For interview Preparation",
+    "priority": 3,
+    "created_at": "2026-01-30T14:41:21.924125",
+    "completed_at": "2026-02-01T22:35:39.546174",
+    "is_completed": false,
+    "completed": true
+  },
+  {
+    "id": "18f9f518-a685-49bf-85b3-9038f4df1e8f",
+    "title": "Match",
+    "description": "Pak vs Aus 2nd T20",
+    "priority": 3,
+    "created_at": "2026-01-31T07:58:44.419166",
+    "completed_at": null,
+    "is_completed": false
+  },
+  {
+    "id": "0e53d567-e261-441f-9dd5-24a7562f7767",
+    "title": "University",
+    "description": "Assignments",
+    "priority": 3,
+    "created_at": "2026-02-01T17:18:02.328438",
+    "completed_at": null,
+    "is_completed": false
+  }
 ]
