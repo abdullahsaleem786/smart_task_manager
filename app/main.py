@@ -57,6 +57,7 @@ def main():
                 if not features:
                     print("No completed tasks available for ML features.")
                 else:
+                    print("ML-Ready Task Features:")
                     for f in features:
                         print(f)
 

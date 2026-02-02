@@ -20,10 +20,9 @@ class FeatureBuilder:
 
             created = self._parse(t.get("created_at"))
             completed = self._parse(t.get("completed_at"))
-
             if not created or not completed:
                 continue
-            #Fix this
+
             duration = (completed - created).total_seconds() / 60
 
             features.append({
@@ -31,7 +30,7 @@ class FeatureBuilder:
                 "duration_minutes": round(duration, 2),
                 "hour_created": created.hour,
                 "day_of_week": created.weekday(),
-                "completion_delay_minutes": round(duration, 2),
+                "description_length": len(t.get("description","")),
             })
 
         return features
