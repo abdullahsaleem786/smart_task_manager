@@ -15,7 +15,7 @@ def main():
 
     while True:
         show_menu()
-        choice = input("Choose: ")
+        choice = input("Please Choose One Option: ")
 
         try:
             if choice == "1":
