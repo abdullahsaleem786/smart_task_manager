@@ -60,8 +60,35 @@ def main():
                     print("ML-Ready Task Features:")
                     for f in features:
                         print(f)
+            elif choice == "8":
+                from datetime import datetime
+                from app.ml.task_duration_model import TaskDurationModel
 
-            elif choice=='8':
+                title = input("Title: ")
+                description = input("Description: ")
+                priority = int(input("Priority (1-5): "))
+
+                feature = {
+                        "priority": priority,
+                        "hour_created": datetime.now().hour,
+                        "day_of_week": datetime.now().weekday(),
+                        "description_length": len(description),
+                        }
+
+                features = feature_builder.build_features()
+
+                if len(features) < 3:
+                    print("Not enough completed tasks to train ML model.")
+                    return
+
+                model = TaskDurationModel()
+                model.train(features)
+
+                predicted = model.predict(feature)
+                print(f"Estimated completion time: {round(predicted, 2)} minutes")
+
+
+            elif choice=='9':
                 break
 
         except ValueError as e:
