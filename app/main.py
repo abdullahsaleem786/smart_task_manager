@@ -4,13 +4,15 @@ from app.storage.json_store import JsonStore
 from app.cli.menu import show_menu
 from app.analytics.analytics_service import AnalyticsService
 from app.ml.feature_builder import FeatureBuilder
+from app.services.task_service import TaskService
+from app.storage.json_store import JsonStore
+from app.ml.feature_builder import FeatureBuilder
+from app.ml.evaluator import evaluate
 
 
 
 def main():
     task_service = TaskService(JsonStore())
-    analytics = AnalyticsService(task_service)
-    feature_builder = FeatureBuilder(task_service)
 
 
     while True:
@@ -86,9 +88,34 @@ def main():
 
                 predicted = model.predict(feature)
                 print(f"Estimated completion time: {round(predicted, 2)} minutes")
+            elif choice == "9":
+                from app.ml.evaluator import evaluate
+                from app.ml.feature_builder import FeatureBuilder
+                from app.storage.json_store import JsonStore
+                from app.services.task_service import TaskService
+                from app.ml.evaluator import evaluate
+
+                task_service = TaskService(JsonStore())
+                feature_builder = FeatureBuilder(task_service)
+
+                features = feature_builder.build_features()
+
+                if len(features) < 5:
+                    print("Not enough data for evaluation.")
+                    return
+
+                baseline_mae, ml_mae = evaluate(features)
+
+                print(f"Baseline MAE: {round(baseline_mae, 2)} minutes")
+                print(f"ML Model MAE: {round(ml_mae, 2)} minutes")
+
+                if ml_mae < baseline_mae:
+                    print("✅ ML model beats baseline.")
+                else:
+                    print("❌ ML model does NOT beat baseline.")
 
 
-            elif choice=='9':
+            elif choice=='10':
                 break
 
         except ValueError as e:
