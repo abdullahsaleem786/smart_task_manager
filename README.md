@@ -1,21 +1,73 @@
 # Smart Task Manager with Analytics & ML
 
-A CLI-based task manager designed to analyze task behavior and provide intelligent insights using data and machine learning.
+Smart Task Manager is a CLI-based task management system that goes beyond CRUD operations by collecting task behavior data and preparing it for analytics and machine learning.
 
-## Features
-- Task creation and management
-- JSON-based persistence
-- Analytics-ready architecture
-- Future ML-based insights
+This project is built incrementally using a day-by-day engineering approach.
 
-## Tech Stack
-- Python
-- JSON storage
-- CLI interface
+---
 
-## Project Status
-🚧 In active development (Day-by-Day commits)
+## 🚀 Features
 
-## How to Run
+### Core Task Management
+- Create, list, complete, and delete tasks
+- Persistent storage using JSON
+- Unique task IDs
+- Priority-based task handling
+
+### Analytics
+- Task completion statistics
+- Daily task creation and completion trends
+- Average completion time analysis
+
+### Machine Learning (Data-Ready)
+- Feature extraction from completed tasks
+- ML-ready dataset generation
+- Baseline vs ML model evaluation
+- Task duration prediction (experimental)
+
+---
+
+## 🧠 ML Pipeline Explained
+
+1. **Data Collection**
+   - Task creation and completion timestamps are stored automatically
+
+2. **Feature Engineering**
+   - Priority
+   - Task duration
+   - Creation hour
+   - Day of week
+   - Description length
+
+3. **Dataset Export**
+   - Completed tasks are converted into a clean CSV dataset
+   - Ready for model training or external analysis
+
+---
+
+## 🏗 Project Architecture
+
+app/
+├── cli/ # CLI menu and input handling
+├── models/ # Task data model
+├── services/ # Business logic
+├── storage/ # JSON persistence layer
+├── analytics/ # Statistical analysis
+├── ml/ # Feature engineering & ML
+└── main.py # Application entry point
+
+
+---
+
+## 🛠 Tech Stack
+- Python 3
+- JSON (local persistence)
+- CLI-based interface
+- Basic machine learning (from scratch)
+
+---
+
+## ▶️ How to Run
+
 ```bash
-python app/main.py
+python -m app.main
