@@ -71,3 +71,9 @@ app/
 
 ```bash
 python -m app.main
+
+## Testing
+This project uses pytest for automated testing.
+
+Run tests:
+python -m pytest
