@@ -1,5 +1,3 @@
-# app/services/task_service.py
-
 from datetime import datetime
 from app.models.task import Task
 
@@ -7,42 +5,32 @@ from app.models.task import Task
 class TaskService:
     def __init__(self, storage):
         self.storage = storage
-        self._tasks = self.storage.load()  # single load point
-
-    # ---------- Internal Helpers ----------
+        self._tasks = self.storage.load()
 
     def _save(self):
-        """Persist current in-memory state."""
         self.storage.save(self._tasks)
 
     def _find_task(self, task_id):
-        for task in self._tasks:
-            if task["id"] == task_id:
-                return task
-        return None
-
-    # ---------- Public API ----------
+        return next((t for t in self._tasks if t["id"] == task_id), None)
 
     def create_task(self, title, description="", priority=3):
-        task = Task(title, description, priority)
-        self._tasks.append(task.to_dict())
+        task = Task(title, description, priority).to_dict()
+        self._tasks.append(task)
         self._save()
-        return task.to_dict()
+        return task
 
     def list_tasks(self):
-        return list(self._tasks)  # defensive copy
+        return self._tasks
 
     def complete_task(self, task_id):
         task = self._find_task(task_id)
         if not task:
-            raise ValueError("Task not found")
-
-        if task["is_completed"]:
-            raise ValueError("Task already completed")
+            return False
 
         task["is_completed"] = True
         task["completed_at"] = datetime.now().isoformat()
         self._save()
+        return True
 
     def delete_task(self, task_id):
         task = self._find_task(task_id)

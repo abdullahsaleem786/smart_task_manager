@@ -1,6 +1,16 @@
 from app.services.task_service import TaskService
 from app.storage.json_store import JsonStore
 import os
+class InMemoryStore:
+    def __init__(self):
+        self._tasks = []
+
+    def load(self):
+        return list(self._tasks)
+
+    def save(self, tasks):
+        self._tasks = list(tasks)
+
 
 
 def setup_test_service():
@@ -34,3 +44,10 @@ def test_delete_task():
 
     service.delete_task(task["id"])
     assert len(service.list_tasks()) == 0
+def test_complete_nonexistent_task():
+    service = TaskService(InMemoryStore())
+
+    result = service.complete_task("non-existent-id")
+
+    assert result is False
+
