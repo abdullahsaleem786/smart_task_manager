@@ -77,3 +77,21 @@ This project uses pytest for automated testing.
 
 Run tests:
 python -m pytest
+
+## Architecture
+
+- CLI Controller pattern
+- Service layer handles business logic
+- Storage layer abstracted (JSON)
+- Analytics & ML are isolated modules
+
+## Design Decisions
+
+- JSON used for simplicity & transparency
+- Baseline model added to prevent fake ML
+- CLI first to ensure logic correctness
+
+## Testing
+
+```bash
+python -m pytest

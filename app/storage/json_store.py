@@ -1,18 +1,15 @@
 import json
-import os
+from pathlib import Path
 
 
 class JsonStore:
     def __init__(self, file_path="tasks.json"):
-        self.file_path = file_path
+        self.file = Path(file_path)
 
     def load(self):
-        if not os.path.exists(self.file_path):
+        if not self.file.exists():
             return []
-
-        with open(self.file_path, "r") as f:
-            return json.load(f)
+        return json.loads(self.file.read_text())
 
     def save(self, tasks):
-        with open(self.file_path, "w") as f:
-            json.dump(tasks, f, indent=2)
+        self.file.write_text(json.dumps(tasks, indent=2))

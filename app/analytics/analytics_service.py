@@ -1,7 +1,7 @@
 # app/analytics/analytics_service.py
 from datetime import datetime
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime,timezone
 
 
 class AnalyticsService:
@@ -11,15 +11,18 @@ class AnalyticsService:
     def _parse_time(self, iso_time):
         return datetime.fromisoformat(iso_time)
 
-    def task_duration_minutes(self, task):
-        if not task["is_completed"]:
+    from datetime import timezone
+
+    def task_duration_minutes(self, t):
+    # Ensure both are 'aware' by forcing them to UTC
+    # Or, if one is None, handle that first
+        if not t.completed_at or not t.created_at:
             return None
 
-        if not task.get("completed_at"):
-            return None
-
-        created = self._parse_time(task["created_at"])
-        completed = self._parse_time(task["completed_at"])
+    # Convert both to UTC to ensure compatibility
+        completed = t.completed_at.astimezone(timezone.utc)
+        created = t.created_at.astimezone(timezone.utc)
+    
         return (completed - created).total_seconds() / 60
     def _date_only(self, iso_time):
         return datetime.fromisoformat(iso_time).date()
