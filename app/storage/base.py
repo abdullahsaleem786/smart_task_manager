@@ -1,0 +1,6 @@
+from typing import Protocol
+from app.models.task import Task
+
+class TaskStorage(Protocol):
+    def load(self) -> list[Task]: ...
+    def save(self, tasks: list[Task]) -> None: ...

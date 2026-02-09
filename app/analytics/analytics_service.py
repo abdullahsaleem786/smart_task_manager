@@ -1,77 +1,47 @@
-# app/analytics/analytics_service.py
-from datetime import datetime
-from collections import defaultdict
-from datetime import datetime,timezone
-
+from datetime import datetime, timezone
 
 class AnalyticsService:
     def __init__(self, task_service):
         self.task_service = task_service
 
-    def _parse_time(self, iso_time):
-        return datetime.fromisoformat(iso_time)
+    def _parse(self, value):
+        if not value:
+            return None
+        return datetime.fromisoformat(value)
 
-    from datetime import timezone
+    def task_duration_minutes(self, task: dict):
+        created = self._parse(task.get("created_at"))
+        completed = self._parse(task.get("completed_at"))
 
-    def task_duration_minutes(self, t):
-    # Ensure both are 'aware' by forcing them to UTC
-    # Or, if one is None, handle that first
-        if not t.completed_at or not t.created_at:
+        if not created or not completed:
             return None
 
-    # Convert both to UTC to ensure compatibility
-        completed = t.completed_at.astimezone(timezone.utc)
-        created = t.created_at.astimezone(timezone.utc)
-    
+        # normalize timezone
+        if created.tzinfo is None:
+            created = created.replace(tzinfo=timezone.utc)
+        if completed.tzinfo is None:
+            completed = completed.replace(tzinfo=timezone.utc)
+
         return (completed - created).total_seconds() / 60
-    def _date_only(self, iso_time):
-        return datetime.fromisoformat(iso_time).date()
-    def tasks_created_per_day(self):
-        tasks = self.task_service.list_tasks()
-        daily = defaultdict(int)
-
-        for t in tasks:
-            day = self._date_only(t["created_at"])
-            daily[day] += 1
-
-        return dict(daily)
-    def tasks_completed_per_day(self):
-        tasks = self.task_service.list_tasks()
-        daily = defaultdict(int)
-
-        for t in tasks:
-            if t["is_completed"] and t.get("completed_at"):
-                day = self._date_only(t["completed_at"])
-                daily[day] += 1
-
-        return dict(daily)
-
-    def daily_summary(self):
-        return {
-        "created_per_day": self.tasks_created_per_day(),
-        "completed_per_day": self.tasks_completed_per_day(),
-        }
 
     def summary(self):
         tasks = self.task_service.list_tasks()
 
-        total = len(tasks)
-        completed = [t for t in tasks if t["is_completed"]]
-        pending = total - len(completed)
+        completed_tasks = [
+            t for t in tasks if t.get("completed_at")
+        ]
 
         durations = [
             self.task_duration_minutes(t)
-            for t in completed
+            for t in completed_tasks
             if self.task_duration_minutes(t) is not None
         ]
 
-        avg_duration = (
-            sum(durations) / len(durations) if durations else 0
-        )
+        avg_time = round(sum(durations) / len(durations), 2) if durations else 0
 
         return {
-            "total_tasks": total,
-            "completed_tasks": len(completed),
-            "pending_tasks": pending,
-            "average_completion_time_min": round(avg_duration, 2),
+            "total_tasks": len(tasks),
+            "completed_tasks": len(completed_tasks),
+            "pending_tasks": len(tasks) - len(completed_tasks),
+            "average_completion_time_min": avg_time,
         }

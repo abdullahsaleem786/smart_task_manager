@@ -1,15 +1,19 @@
 import json
 from pathlib import Path
-
+from app.models.task import Task
 
 class JsonStore:
-    def __init__(self, file_path="tasks.json"):
-        self.file = Path(file_path)
+    def __init__(self, path: str = "tasks.json"):
+        self.path = Path(path)
 
-    def load(self):
-        if not self.file.exists():
+    def load(self) -> list[Task]:
+        if not self.path.exists():
             return []
-        return json.loads(self.file.read_text())
 
-    def save(self, tasks):
-        self.file.write_text(json.dumps(tasks, indent=2))
+        raw = json.loads(self.path.read_text())
+        return [Task.from_dict(t) for t in raw]
+
+    def save(self, tasks: list[Task]) -> None:
+        self.path.write_text(
+            json.dumps([t.to_dict() for t in tasks], indent=2)
+        )

@@ -1,28 +1,30 @@
-from app.cli.menu import show_menu
-from app.cli.controller import CLIController
-from app.services.task_service import TaskService
 from app.storage.json_store import JsonStore
+from app.services.task_service import TaskService
 from app.analytics.analytics_service import AnalyticsService
-from app.ml.feature_builder import FeatureBuilder
+from app.cli.controller import Controller
+from app.services.task_service import TaskService
+from app.analytics.analytics_service import AnalyticsService
 
 
 def main():
     storage = JsonStore()
     task_service = TaskService(storage)
     analytics = AnalyticsService(task_service)
-    feature_builder = FeatureBuilder(task_service)
-
-    controller = CLIController(
-        task_service=task_service,
-        analytics=analytics,
-        feature_builder=feature_builder,
-    )
+    controller = Controller(task_service, analytics)
 
     while True:
-        show_menu()
-        choice = input("Please Choose One Option: ").strip()
-        controller.handle(choice)
+        print("\n1. Create Task")
+        print("2. List Tasks")
+        print("3. Complete Task")
+        print("4. Delete Task")
+        print("5. View Analytics")
+        print("0. Exit")
 
+        choice = input("Please Choose One Option: ")
+        if choice == "0":
+            break
+
+        controller.handle(choice)
 
 if __name__ == "__main__":
     main()
