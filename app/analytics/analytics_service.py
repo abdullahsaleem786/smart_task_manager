@@ -9,14 +9,13 @@ class AnalyticsService:
             return None
         return datetime.fromisoformat(value)
 
-    def task_duration_minutes(self, task: dict):
-        created = self._parse(task.get("created_at"))
-        completed = self._parse(task.get("completed_at"))
+    def task_duration_minutes(self, task):
+        created = self._parse(task.created_at)
+        completed = self._parse(task.completed_at)
 
         if not created or not completed:
             return None
 
-        # normalize timezone
         if created.tzinfo is None:
             created = created.replace(tzinfo=timezone.utc)
         if completed.tzinfo is None:
@@ -26,22 +25,19 @@ class AnalyticsService:
 
     def summary(self):
         tasks = self.task_service.list_tasks()
-
-        completed_tasks = [
-            t for t in tasks if t.get("completed_at")
-        ]
+        completed = [t for t in tasks if t.is_completed]
 
         durations = [
             self.task_duration_minutes(t)
-            for t in completed_tasks
+            for t in completed
             if self.task_duration_minutes(t) is not None
         ]
 
-        avg_time = round(sum(durations) / len(durations), 2) if durations else 0
+        avg = round(sum(durations) / len(durations), 2) if durations else 0
 
         return {
             "total_tasks": len(tasks),
-            "completed_tasks": len(completed_tasks),
-            "pending_tasks": len(tasks) - len(completed_tasks),
-            "average_completion_time_min": avg_time,
+            "completed_tasks": len(completed),
+            "pending_tasks": len(tasks) - len(completed),
+            "average_completion_time_min": avg,
         }

@@ -1,15 +1,24 @@
-from datetime import datetime, timezone,UTC
+from datetime import datetime, timezone
 import uuid
 
 class Task:
-    def __init__(self, title, description="", priority=3):
-        self.id = ...
+    def __init__(
+        self,
+        title: str,
+        description: str = "",
+        priority: int = 3,
+        task_id: str | None = None,
+        created_at: str | None = None,
+        completed_at: str | None = None,
+        is_completed: bool = False,
+    ):
+        self.id = task_id or str(uuid.uuid4())
         self.title = title
         self.description = description
         self.priority = priority
-        self.is_completed = False
-        self.created_at = datetime.utcnow().isoformat()
-        self.completed_at = None
+        self.created_at = created_at or datetime.now(timezone.utc).isoformat()
+        self.completed_at = completed_at
+        self.is_completed = is_completed
 
     def complete(self):
         self.is_completed = True
@@ -29,10 +38,10 @@ class Task:
     @staticmethod
     def from_dict(data: dict) -> "Task":
         return Task(
+            task_id=data["id"],
             title=data["title"],
             description=data.get("description", ""),
             priority=data.get("priority", 3),
-            task_id=data["id"],
             created_at=data.get("created_at"),
             completed_at=data.get("completed_at"),
             is_completed=data.get("is_completed", False),
