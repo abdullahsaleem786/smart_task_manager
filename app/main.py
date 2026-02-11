@@ -18,6 +18,7 @@ def main():
         print("3. Complete Task")
         print("4. Delete Task")
         print("5. View Analytics")
+        print("6. Filtering")
         print("0. Exit")
 
         choice = input("Please Choose One Option: ")
