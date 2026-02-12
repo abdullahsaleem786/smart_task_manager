@@ -5,12 +5,30 @@ class Controller:
     def __init__(self, task_service, analytics):
         self.task_service = task_service
         self.analytics = analytics
+    def filter_tasks(self):
+        print("\n1. Completed Tasks")
+        print("2. Pending Tasks")
+        option = input("Choose filter: ")
+
+        if option == "1":
+            tasks = self.task_service.completed_tasks()
+        elif option == "2":
+            tasks = self.task_service.pending_tasks()
+        else:
+            print("Invalid filter")
+            return
+
+        if not tasks:
+            print("No tasks found.")
+            return
+
+        for t in tasks:
+            print(f"{t.id} - {t.title}")
 
     def handle(self, choice: str):
         if choice == "1":
             title = input("Task title: ")
             self.task_service.create_task(title)
-
         elif choice == "2":
             for t in self.task_service.list_tasks():
                 print(t.id, "-", t.title)
@@ -28,3 +46,5 @@ class Controller:
         elif choice == "5":
             summary = self.analytics.summary()
             print(summary)
+        elif choice == "6":
+            self.filter_tasks()

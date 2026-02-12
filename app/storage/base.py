@@ -1,6 +1,14 @@
-from typing import Protocol
+from abc import ABC, abstractmethod
+from typing import List
 from app.models.task import Task
 
-class TaskStorage(Protocol):
-    def load(self) -> list[Task]: ...
-    def save(self, tasks: list[Task]) -> None: ...
+
+class BaseStore(ABC):
+
+    @abstractmethod
+    def load(self) -> List[Task]:
+        pass
+
+    @abstractmethod
+    def save(self, tasks: List[Task]) -> None:
+        pass

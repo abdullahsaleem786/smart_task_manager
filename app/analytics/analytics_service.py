@@ -1,25 +1,23 @@
 from datetime import datetime, timezone
+from app.models.task import Task
+
 
 class AnalyticsService:
     def __init__(self, task_service):
         self.task_service = task_service
 
-    def _parse(self, value):
+    def _parse(self, value: str | None):
         if not value:
             return None
-        return datetime.fromisoformat(value)
+        dt = datetime.fromisoformat(value)
+        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
 
-    def task_duration_minutes(self, task):
+    def task_duration_minutes(self, task: Task):
         created = self._parse(task.created_at)
         completed = self._parse(task.completed_at)
 
         if not created or not completed:
             return None
-
-        if created.tzinfo is None:
-            created = created.replace(tzinfo=timezone.utc)
-        if completed.tzinfo is None:
-            completed = completed.replace(tzinfo=timezone.utc)
 
         return (completed - created).total_seconds() / 60
 
