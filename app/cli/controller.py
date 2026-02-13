@@ -1,10 +1,13 @@
 from app.services.task_service import TaskService
 from app.analytics.analytics_service import AnalyticsService
+from app.services.export_service import ExportService
 
 class Controller:
     def __init__(self, task_service, analytics):
         self.task_service = task_service
         self.analytics = analytics
+        self.export_service = ExportService(self.task_service)
+
     def filter_tasks(self):
         print("\n1. Completed Tasks")
         print("2. Pending Tasks")
@@ -48,3 +51,10 @@ class Controller:
             print(summary)
         elif choice == "6":
             self.filter_tasks()
+        elif choice == "7":
+            success = self.export_service.export_tasks_to_csv()
+            if success:
+                print("Tasks exported to tasks_export.csv")
+            else:
+                print("No tasks to export")
+

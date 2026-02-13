@@ -6,9 +6,7 @@ def show_menu():
     print("4. Delete Task")
     print("5. View Analytics")
     print("6. View Daily Trends")
-    print("7. View ML Feature Data")
-    print("8. Predict Task Duration")
-    print("9. Evaluate ML Model")
-    print("10. Exit")
+    print("7. Export Tasks to CSV")
+
 
 
