@@ -26,3 +26,8 @@ def test_complete_task():
 
     assert result is True
     assert task.is_completed is True
+
+def test_list_tasks_returns_task_objects(task_service):
+    tasks = task_service.list_tasks()
+    assert all(hasattr(t, "id") for t in tasks)
+

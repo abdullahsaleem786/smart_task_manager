@@ -46,3 +46,4 @@ class TaskService:
     def pending_tasks(self):
         return [t for t in self._tasks if not t.is_completed]
 
+

@@ -23,7 +23,8 @@ class AnalyticsService:
 
     def summary(self):
         tasks = self.task_service.list_tasks()
-        completed = [t for t in tasks if t.is_completed]
+
+        completed = [t for t in tasks if t.completed_at]
 
         durations = [
             self.task_duration_minutes(t)
@@ -38,4 +39,4 @@ class AnalyticsService:
             "completed_tasks": len(completed),
             "pending_tasks": len(tasks) - len(completed),
             "average_completion_time_min": avg,
-        }
+            }
