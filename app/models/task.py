@@ -5,8 +5,8 @@ class Task:
     def __init__(
         self,
         title: str,
+        priority: str = "medium",
         description: str = "",
-        priority: int = 3,
         task_id: str | None = None,
         created_at: str | None = None,
         completed_at: str | None = None,
@@ -19,6 +19,7 @@ class Task:
         self.created_at = created_at or datetime.now(timezone.utc).isoformat()
         self.completed_at = completed_at
         self.is_completed = is_completed
+
 
     def complete(self):
         self.is_completed = True

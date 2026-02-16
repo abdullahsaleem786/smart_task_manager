@@ -14,10 +14,15 @@ class TaskService:
     def _find(self, task_id: int) -> Task | None:
         return next((t for t in self._tasks if t.id == task_id), None)
 
-    def create_task(self, title: str, priority: int):
-        task_id = max((t.id for t in self._tasks), default=0) + 1
-        self._tasks.append(Task(task_id, title, priority=priority))
+    def create_task(self, title: str, priority: str = "medium"):
+        task = Task(
+            title=title,
+            priority=priority
+        )
+        self._tasks.append(task)
         self._save()
+        return task
+
 
     def list_tasks(self) -> List[Task]:
         return self._tasks
