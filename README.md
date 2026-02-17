@@ -1,8 +1,8 @@
 # Smart Task Manager with Analytics & ML
 
-Smart Task Manager is a CLI-based task management system that goes beyond CRUD operations by collecting task behavior data and preparing it for analytics and machine learning.
+Smart Task Manager is a CLI-based task management system that goes beyond basic CRUD operations by collecting task behavior data and preparing it for analytics and future machine learning workflows.
 
-This project is built incrementally using a day-by-day engineering approach.
+The project is built incrementally using a **day-by-day engineering approach**, focusing on clean architecture, testability, and data readiness.
 
 ---
 
@@ -16,32 +16,34 @@ This project is built incrementally using a day-by-day engineering approach.
 
 ### Analytics
 - Task completion statistics
-- Daily task creation and completion trends
-- Average completion time analysis
+- Completed vs pending task counts
+- Average task completion time
 
 ### Machine Learning (Data-Ready)
 - Feature extraction from completed tasks
-- ML-ready dataset generation
-- Baseline vs ML model evaluation
-- Task duration prediction (experimental)
+- Clean dataset export for ML experimentation
+- Baseline logic before introducing models
+- ML modules structured for future expansion
 
 ---
 
-## 🧠 ML Pipeline Explained
+## 🧠 ML Pipeline (Conceptual & Partial Implementation)
 
-1. **Data Collection**
-   - Task creation and completion timestamps are stored automatically
+### 1. Data Collection
+- Task creation and completion timestamps are stored automatically
 
-2. **Feature Engineering**
-   - Priority
-   - Task duration
-   - Creation hour
-   - Day of week
-   - Description length
+### 2. Feature Engineering
+- Priority
+- Task duration
+- Creation hour
+- Day of week
+- Description length
 
-3. **Dataset Export**
-   - Completed tasks are converted into a clean CSV dataset
-   - Ready for model training or external analysis
+### 3. Dataset Export
+- Completed tasks can be exported as a clean CSV
+- Dataset is ready for external analysis or model training
+
+> ⚠️ Note: ML models are experimental and intentionally minimal to avoid fake or premature ML claims.
 
 ---
 
@@ -49,11 +51,11 @@ This project is built incrementally using a day-by-day engineering approach.
 
 app/
 ├── cli/ # CLI menu and input handling
-├── models/ # Task data model
+├── models/ # Task data models
 ├── services/ # Business logic
 ├── storage/ # JSON persistence layer
 ├── analytics/ # Statistical analysis
-├── ml/ # Feature engineering & ML
+├── ml/ # Feature engineering & ML groundwork
 └── main.py # Application entry point
 
 
@@ -63,7 +65,8 @@ app/
 - Python 3
 - JSON (local persistence)
 - CLI-based interface
-- Basic machine learning (from scratch)
+- pytest for testing
+- ML groundwork (no heavy frameworks yet)
 
 ---
 
@@ -72,26 +75,22 @@ app/
 ```bash
 python -m app.main
 
-## Testing
+🧪 Testing
+
 This project uses pytest for automated testing.
 
 Run tests:
+
 python -m pytest
 
-## Architecture
+🧩 Design Principles
 
-- CLI Controller pattern
-- Service layer handles business logic
-- Storage layer abstracted (JSON)
-- Analytics & ML are isolated modules
+CLI-first to validate logic before UI
 
-## Design Decisions
+Service-layer architecture for testability
 
-- JSON used for simplicity & transparency
-- Baseline model added to prevent fake ML
-- CLI first to ensure logic correctness
+Storage abstraction for future scalability
 
-## Testing
+Analytics and ML isolated from core logic
 
-```bash
-python -m pytest
+No fake ML — baseline logic before models
