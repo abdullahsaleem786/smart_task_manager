@@ -82,7 +82,7 @@ This project uses pytest for automated testing.
 Run tests:
 
 python -m pytest
-
+```
 🧩 Design Principles
 
 CLI-first to validate logic before UI
